@@ -12,8 +12,8 @@ export default function App({ Component, pageProps, router }: AppProps) {
   const pageTitle = pageProps.title || "Selfie";
   const pageDescription =
     pageProps.description || "Let your codebase take its own selfies.";
-  const pageImage = pageProps.imageUrl || "https://selfie.dev/car-3072w.webp";
-  const pageUrl = `https://selfie.dev${router.pathname}`;
+  const pageImage = pageProps.imageUrl || "https://lib.selfie.dev/car-3072w.webp";
+  const pageUrl = `https://lib.selfie.dev${router.pathname}`;
   return (
     <>
       <Head>
@@ -27,13 +27,13 @@ export default function App({ Component, pageProps, router }: AppProps) {
         <meta name="twitter:card" content="summary_large_image" />
         <meta
           name="twitter:image"
-          content={"https://selfie.dev/twitter-card.webp"}
+          content={"https://lib.selfie.dev/twitter-card.webp"}
         />
         {pageProps.showHeroLinks === "false" && (
           <meta name="robots" content="noindex" />
         )}
         {router.pathname === "/" && (
-          <link rel="canonical" href="https://selfie.dev/jvm" />
+          <link rel="canonical" href="https://lib.selfie.dev/jvm" />
         )}
       </Head>
       <MDXProvider components={mdxComponents}>

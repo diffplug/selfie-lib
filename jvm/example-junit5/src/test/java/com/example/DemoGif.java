@@ -8,6 +8,6 @@ import org.junit.jupiter.api.Test;
 public class DemoGif {
   @Test
   void homepage() {
-    expectSelfie(RestAssured.get("https://selfie.dev"));
+    expectSelfie(RestAssured.get("https://lib.selfie.dev"));
   }
 }

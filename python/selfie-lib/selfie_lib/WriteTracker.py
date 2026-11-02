@@ -192,11 +192,11 @@ class InlineWriteTracker(WriteTracker[CallLocation, LiteralValue]):
                 ).parse_literal(snapshot.format)
             except Exception as e:
                 raise AssertionError(
-                    f"Error while parsing the literal at {call.location.ide_link(layout)}. Please report this error at https://github.com/diffplug/selfie"
+                    f"Error while parsing the literal at {call.location.ide_link(layout)}. Please report this error at https://github.com/diffplug/selfie-lib"
                 ) from e
             if parsed_value != snapshot.expected:
                 raise layout.fs.assert_failed(
-                    f"Selfie cannot modify the literal at {call.location.ide_link(layout)} because Selfie has a parsing bug. Please report this error at https://github.com/diffplug/selfie",
+                    f"Selfie cannot modify the literal at {call.location.ide_link(layout)} because Selfie has a parsing bug. Please report this error at https://github.com/diffplug/selfie-lib",
                     snapshot.expected,
                     parsed_value,
                 )

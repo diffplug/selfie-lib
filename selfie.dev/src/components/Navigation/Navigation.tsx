@@ -41,9 +41,7 @@ export function Navigation() {
             setSelectIsOpen={setSelectIsOpen}
             handleChange={handleChange}
           />
-          {pathParts.language !== "other-platforms" && (
-            <SubNavigation pathParts={pathParts} selectIsOpen={selectIsOpen} />
-          )}
+          <SubNavigation pathParts={pathParts} selectIsOpen={selectIsOpen} />
         </>
       )}
     </div>

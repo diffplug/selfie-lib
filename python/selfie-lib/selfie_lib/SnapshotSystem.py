@@ -126,7 +126,7 @@ class Mode(Enum):
 
     def msg_snapshot_mismatch(self, expected: str, actual: str) -> str:  # noqa: ARG002
         return self.msg(
-            "Snapshot mismatch (error msg could be better https://github.com/diffplug/selfie/issues/501)"
+            "Snapshot mismatch (error msg could be better https://github.com/diffplug/selfie-lib/issues/501)"
         )
 
     def msg_snapshot_mismatch_binary(self, expected: bytes, actual: bytes) -> str:

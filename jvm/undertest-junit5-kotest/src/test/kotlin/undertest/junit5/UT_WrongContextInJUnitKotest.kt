@@ -15,7 +15,7 @@ class UT_WrongContextInJUnitKotest :
                   """No JUnit test is in progress on this thread. If this is a Kotest test, make the following change:
 ${' '} -import com.diffplug.selfie.Selfie.expectSelfie
 ${' '} +import com.diffplug.selfie.coroutines.expectSelfie
-For more info https://selfie.dev/jvm/kotest#selfie-and-coroutines""")
+For more info https://lib.selfie.dev/jvm/kotest#selfie-and-coroutines""")
         }
       }
     })

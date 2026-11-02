@@ -3,7 +3,7 @@ import { DocsImage } from "@/components/DocsImage";
 export const title = "Selfie Python Snapshot Testing | Facets";
 export const description =
   "A single Selfie snapshot may contain multiple values, each recording a different facet of the entity under test. This allows you to assert on brief summary facets inline with your test code, while putting large exhaustive facets on disk.";
-export const imageUrl = "https://selfie.dev/advanced.webp";
+export const imageUrl = "https://lib.selfie.dev/advanced.webp";
 
 <DocsImage imgAbsoluteUrl={imageUrl} />
 
@@ -11,7 +11,7 @@ Assuming you have [installed selfie](/py/get-started#installation) and glanced t
 
 ## Our toy project
 
-We'll be using the [`example-pytest-selfie`](https://github.com/diffplug/selfie/tree/main/python/example-pytest-selfie) project from the selfie GitHub repo. You can clone the code and follow along, but there's no need to. If you did clone the project, you could run `uv run python app.py` and you'd have a little flask webapp running at `127.0.0.1:5000 ` (`localhost` might not work, make sure to use `127.0.0.1`!).
+We'll be using the [`example-pytest-selfie`](https://github.com/diffplug/selfie-lib/tree/main/python/example-pytest-selfie) project from the selfie GitHub repo. You can clone the code and follow along, but there's no need to. If you did clone the project, you could run `uv run python app.py` and you'd have a little flask webapp running at `127.0.0.1:5000 ` (`localhost` might not work, make sure to use `127.0.0.1`!).
 
 It has a homepage where we can login. We can go to `/email` to see the emails the server has sent and click our login link, and boom we've got some auth cookies.
 
@@ -205,7 +205,7 @@ HTML = (
 Snapshot testing has been badly underused for three reasons:
 
 - controlling read vs write used to be cumbersome (fixed by [control comments](/py/get-started#quickstart))
-- stale snapshots used to pile up (fixed by garbage collection [TODO](https://github.com/diffplug/selfie/issues/325))
+- stale snapshots used to pile up (fixed by garbage collection [TODO](https://github.com/diffplug/selfie-lib/issues/325))
 - a great test should tell a story, and disk snapshots can't do that
 
 Inline snapshots are a partial fix for storytelling within a test, but the harnessing can become verbose. This is where we combine it all:
@@ -243,10 +243,10 @@ login=user@domain.com|JclThw==;Path=/""")
 status code: 401""")
 ```
 
-We just wrote a high-level specification of a realistic login flow, and it only took 24 lines of python code — most of which were generated for us, and could be regenerated on a whim if we want to change our copywriting. The [corresponding disk snapshot](https://github.com/diffplug/selfie/blob/main/python/example-pytest-selfie/tests/facets_test.ss) gives us an exhaustive specification and description of the server's behavior.
+We just wrote a high-level specification of a realistic login flow, and it only took 24 lines of python code — most of which were generated for us, and could be regenerated on a whim if we want to change our copywriting. The [corresponding disk snapshot](https://github.com/diffplug/selfie-lib/blob/main/python/example-pytest-selfie/tests/facets_test.ss) gives us an exhaustive specification and description of the server's behavior.
 
 Didn't think that adopting a bugfixed version of your internationalization lib would cause any changes to your website whatsever? Oops. Don't wade through failed assertions, get a diff in every failure. If you want, regenerate all the snapshots to get a full view of the problem across the whole codebase in your git client.
 
 Testing software is a bit like tailoring a suit for an octopus. Not because the octopus needs a suit — because we need a map! And we only have one hand — better hand some pins to the octopus!
 
-_Pull requests to improve the landing page and documentation are greatly appreciated, you can find the [source code here](https://github.com/diffplug/selfie)._
+_Pull requests to improve the landing page and documentation are greatly appreciated, you can find the [source code here](https://github.com/diffplug/selfie-lib)._

@@ -1,8 +1,6 @@
 export const languageSlugsToLabels = {
   jvm: "jvm",
   py: "py",
-  js: "js",
-  "other-platforms": "...",
 };
 
 export type LanguageSlug = keyof typeof languageSlugsToLabels;

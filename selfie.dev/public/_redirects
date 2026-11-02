@@ -1,7 +1,7 @@
 /jvm/advanced /jvm/facets 301
-/js https://github.com/diffplug/selfie/issues/84
-/js/* https://github.com/diffplug/selfie/issues/84
-/go https://github.com/diffplug/selfie/issues/85
-/go/* https://github.com/diffplug/selfie/issues/85
-/other-platforms https://github.com/diffplug/selfie/issues/85
-/other-platforms/* https://github.com/diffplug/selfie/issues/85
+/js https://github.com/diffplug/selfie-lib/issues/84
+/js/* https://github.com/diffplug/selfie-lib/issues/84
+/go https://github.com/diffplug/selfie-lib/issues/85
+/go/* https://github.com/diffplug/selfie-lib/issues/85
+/other-platforms https://github.com/diffplug/selfie-lib/issues/85
+/other-platforms/* https://github.com/diffplug/selfie-lib/issues/85

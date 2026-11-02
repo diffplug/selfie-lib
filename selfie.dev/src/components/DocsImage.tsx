@@ -1,6 +1,6 @@
 import clsx from "clsx/lite";
 
-const BASE_URL = "https://selfie.dev";
+const BASE_URL = "https://lib.selfie.dev";
 
 interface DocsImageProps {
   imgAbsoluteUrl: string;

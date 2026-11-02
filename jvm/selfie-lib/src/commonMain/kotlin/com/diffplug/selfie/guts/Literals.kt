@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023-2024 DiffPlug
+ * Copyright (C) 2023-2026 DiffPlug
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -131,10 +131,10 @@ internal object LiteralString : LiteralFormat<String>() {
       else
           when (language) {
             // TODO: support triple-quoted strings in scala
-            // https://github.com/diffplug/selfie/issues/106
+            // https://github.com/diffplug/selfie-lib/issues/106
             Language.SCALA,
             // TODO: support triple-quoted strings in groovy
-            // https://github.com/diffplug/selfie/issues/105
+            // https://github.com/diffplug/selfie-lib/issues/105
             Language.GROOVY,
             Language.JAVA_PRE15 -> encodeMultiAsSingleJava(value)
             Language.JAVA -> encodeMultiJava(value, encodingPolicy)
@@ -153,10 +153,10 @@ internal object LiteralString : LiteralFormat<String>() {
           when (language) {
             Language.SCALA ->
                 throw UnsupportedOperationException(
-                    "Selfie doesn't support triple-quoted strings in Scala, yet - help wanted: https://github.com/diffplug/selfie/issues/106")
+                    "Selfie doesn't support triple-quoted strings in Scala, yet - help wanted: https://github.com/diffplug/selfie-lib/issues/106")
             Language.GROOVY ->
                 throw UnsupportedOperationException(
-                    "Selfie doesn't support triple-quoted strings in Groovy, yet - help wanted: https://github.com/diffplug/selfie/issues/105")
+                    "Selfie doesn't support triple-quoted strings in Groovy, yet - help wanted: https://github.com/diffplug/selfie-lib/issues/105")
             Language.JAVA_PRE15,
             Language.JAVA -> parseMultiJava(str)
             Language.KOTLIN -> parseMultiKotlin(str)

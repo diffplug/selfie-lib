@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 DiffPlug
+ * Copyright (C) 2024-2026 DiffPlug
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -77,7 +77,7 @@ internal class SnapshotSystemKotest(settings: SelfieSettingsAPI) : SnapshotSyste
     You can fix this by making the following change:
       -import com.diffplug.selfie.Selfie.expectSelfie
       +import com.diffplug.selfie.coroutines.expectSelfie
-    For more info https://selfie.dev/jvm/kotest#selfie-and-coroutines
+    For more info https://lib.selfie.dev/jvm/kotest#selfie-and-coroutines
   """
               .trimIndent())
   internal fun finishedAllTests() {
@@ -145,6 +145,7 @@ internal class SnapshotFileProgress(val system: SnapshotSystemKotest, val classO
     assertNotTerminated()
     tests.updateAndGet { it.plusOrNoOp(test, WithinTestGC()) }
   }
+
   /**
    * Stops assigning this thread to store snapshots within this file at `test`, and if successful
    * marks that all other snapshots of this test can be pruned. A single test can be run multiple
@@ -211,6 +212,7 @@ internal class SnapshotFileProgress(val system: SnapshotSystemKotest, val classO
     // now that we are done, allow our contents to be GC'ed
     file = null
   }
+
   // the methods below are called from the test thread for I/O on snapshots
   fun keep(test: String, suffixOrAll: String?) {
     assertNotTerminated()

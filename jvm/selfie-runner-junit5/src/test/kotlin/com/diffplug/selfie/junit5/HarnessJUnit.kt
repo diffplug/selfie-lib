@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023-2024 DiffPlug
+ * Copyright (C) 2023-2026 DiffPlug
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -161,6 +161,7 @@ open class HarnessJUnit() {
         assert(lines.size >= endInclusive)
       }
       fun shrinkByOne() = LineRange(lines, startInclusive + 1, endInclusive - 1)
+
       /** Prepend `//` to every line in this range and save it to disk. */
       fun commentOut() = mutateLinesAndWriteToDisk { lineNumber, line ->
         if (line.trim().startsWith("//")) {
@@ -192,13 +193,13 @@ open class HarnessJUnit() {
       fun content() = lines.subList(startInclusive, endInclusive + 1).joinToString("\n")
       fun setContent(mustBe: String) {
         FileSystem.SYSTEM.write(subprojectFolder.resolve(subpath)) {
-          for (i in 0 ..< startInclusive) {
+          for (i in 0..<startInclusive) {
             writeUtf8(lines[i])
             writeUtf8("\n")
           }
           writeUtf8(mustBe)
           writeUtf8("\n")
-          for (i in endInclusive + 1 ..< lines.size) {
+          for (i in endInclusive + 1..<lines.size) {
             writeUtf8(lines[i])
             writeUtf8("\n")
           }
@@ -213,7 +214,7 @@ open class HarnessJUnit() {
         if (subprojectFolder.name != "undertest-junit5-kotest") {
           subprojectFolder.parent!!.toFile()
         } else {
-          // https://github.com/diffplug/selfie/issues/203
+          // https://github.com/diffplug/selfie-lib/issues/203
           subprojectFolder.resolve("harness").toFile()
         }
     return GradleConnector.newConnector()

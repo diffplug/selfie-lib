@@ -1,8 +1,8 @@
 # Selfie snapshot testing for Python
 
-- High-level documentation - [selfie.dev](https://selfie.dev/py/get-started).
+- High-level documentation - [lib.selfie.dev](https://lib.selfie.dev/py/get-started).
 - API documentation - [pydoc.selfie.dev](https://pydoc.selfie.dev/namespaces).
-- Source code - [github.com/diffplug/selfie](https://github.com/diffplug/selfie)
+- Source code - [github.com/diffplug/selfie-lib](https://github.com/diffplug/selfie-lib)
 
 ## Contributing
 
