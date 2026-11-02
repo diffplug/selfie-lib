@@ -1,4 +1,4 @@
-# selfie-lib: snapshot testing and memoizing for Python and JVM
+# selfie-lib: snapshot testing for Python and JVM
 
 > **Moved:** this library now lives at `diffplug/selfie-lib`, with docs at [lib.selfie.dev](https://lib.selfie.dev). Maven and PyPI coordinates and the API are unchanged, so you don't need to change anything. [Read the announcement](https://github.com/diffplug/selfie-lib/issues/595).
 
