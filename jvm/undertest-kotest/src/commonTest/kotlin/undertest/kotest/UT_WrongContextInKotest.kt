@@ -16,7 +16,7 @@ class UT_WrongContextInKotest :
 You can fix this by making the following change:
 ${' '} -import com.diffplug.selfie.Selfie.expectSelfie
 ${' '} +import com.diffplug.selfie.coroutines.expectSelfie
-For more info https://selfie.dev/jvm/kotest#selfie-and-coroutines""")
+For more info https://lib.selfie.dev/jvm/kotest#selfie-and-coroutines""")
         }
       }
     })

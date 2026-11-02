@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023-2024 DiffPlug
+ * Copyright (C) 2023-2026 DiffPlug
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ import kotlin.jvm.JvmStatic
 
 /**
  * A camera transforms a subject of a specific type into a [Snapshot] (tutorial for
- * [jvm](https://selfie.dev/jvm/advanced#typed-snapshots)).
+ * [jvm](https://lib.selfie.dev/jvm/advanced#typed-snapshots)).
  */
 fun interface Camera<Subject> {
   fun snapshot(subject: Subject): Snapshot
@@ -38,7 +38,7 @@ fun interface Camera<Subject> {
 
 /**
  * A lens transforms a single [Snapshot] into a new [Snapshot], transforming / creating / removing
- * [SnapshotValue]s along the way (tutorial for [jvm](https://selfie.dev/jvm/advanced#lenses)).
+ * [SnapshotValue]s along the way (tutorial for [jvm](https://lib.selfie.dev/jvm/advanced#lenses)).
  */
 fun interface Lens {
   fun transform(snapshot: Snapshot): Snapshot
@@ -54,7 +54,7 @@ fun interface StringOptionalFunction {
 
 /**
  * A lens which makes it easy to pipe data from one facet to another within a snapshot (tutorial for
- * [jvm](https://selfie.dev/jvm/advanced#compound-lens)).
+ * [jvm](https://lib.selfie.dev/jvm/advanced#compound-lens)).
  */
 open class CompoundLens : Lens {
   private val lenses = mutableListOf<Lens>()

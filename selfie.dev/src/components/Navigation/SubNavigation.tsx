@@ -79,7 +79,7 @@ export function SubNavigation({ pathParts, selectIsOpen }: SubNavigationProps) {
               </Link>
             );
           })}
-          <Link href="https://github.com/diffplug/selfie">
+          <Link href="https://github.com/diffplug/selfie-lib">
             <Button
               className={clsx(
                 unPressedClasses,

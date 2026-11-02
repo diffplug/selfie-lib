@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023-2025 DiffPlug
+ * Copyright (C) 2023-2026 DiffPlug
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -78,10 +78,12 @@ private constructor(
       if (key.isEmpty())
           throw IllegalArgumentException("The empty string is reserved for the subject.")
       else Snapshot(subject, facetData.plus(unixNewlines(key), value))
+
   /** Adds or replaces the given facet or subject (subject is key=""). */
   fun plusOrReplace(key: String, value: SnapshotValue): Snapshot =
       if (key.isEmpty()) Snapshot(value, facetData)
       else Snapshot(subject, facetData.plusOrNoOpOrReplace(unixNewlines(key), value))
+
   /** Retrieves the given facet or subject (subject is key=""). */
   fun subjectOrFacetMaybe(key: String): SnapshotValue? =
       if (key.isEmpty()) subject else facetData[key]
@@ -382,11 +384,11 @@ class SnapshotValueReader(val lineReader: LineReader) {
     private const val FLAG_BASE64 = " ═╗ base64"
 
     /**
-     * https://github.com/diffplug/selfie/blob/main/jvm/selfie-lib/src/commonTest/resources/com/diffplug/selfie/scenarios_and_lenses.ss
+     * https://github.com/diffplug/selfie-lib/blob/main/jvm/selfie-lib/src/commonTest/resources/com/diffplug/selfie/scenarios_and_lenses.ss
      */
     internal val nameEsc = PerCharacterEscaper.specifiedEscape("\\\\[(])\nn\tt╔┌╗┐═─")
 
-    /** https://github.com/diffplug/selfie/issues/2 */
+    /** https://github.com/diffplug/selfie-lib/issues/2 */
     internal val bodyEsc = PerCharacterEscaper.selfEscape("\uD801\uDF43\uD801\uDF41")
   }
 }

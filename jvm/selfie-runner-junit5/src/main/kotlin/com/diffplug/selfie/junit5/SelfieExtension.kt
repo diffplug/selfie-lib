@@ -31,7 +31,7 @@ import kotlinx.coroutines.withContext
 
 /**
  * If you're using Kotest, add this to your [AbstractProjectConfig]. See
- * [here](https://selfie.dev/jvm/kotest) for high-level docs.
+ * [here](https://lib.selfie.dev/jvm/kotest) for high-level docs.
  */
 class SelfieExtension(projectConfig: AbstractProjectConfig) :
     Extension, BeforeSpecListener, TestCaseExtension, FinalizeSpecListener, AfterProjectListener {

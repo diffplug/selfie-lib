@@ -1,8 +1,8 @@
 # Selfie snapshot testing for Java, Kotlin, and the JVM
 
-- High-level documentation - [selfie.dev](https://selfie.dev/jvm/get-started).
+- High-level documentation - [lib.selfie.dev](https://lib.selfie.dev/jvm/get-started).
 - API documentation - [pydoc.selfie.dev](https://kdoc.selfie.dev).
-- Source code - [github.com/diffplug/selfie](https://github.com/diffplug/selfie)
+- Source code - [github.com/diffplug/selfie-lib](https://github.com/diffplug/selfie-lib)
 
 ## Contributing
 

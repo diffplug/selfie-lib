@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023-2024 DiffPlug
+ * Copyright (C) 2023-2026 DiffPlug
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,10 +21,13 @@ import com.diffplug.selfie.Snapshot
 expect class CallLocation : Comparable<CallLocation> {
   val fileName: String?
   val line: Int
+
   /** Returns a new CallLocation at the given line. */
   fun withLine(line: Int): CallLocation
+
   /** Returns a string which an IDE can render as a hyperlink. */
   fun ideLink(layout: SnapshotFileLayout): String
+
   /**
    * Computing the exact path using [SnapshotFileLayout.sourcePathForCall] is expensive, so it can
    * be helpful to cache these.
@@ -127,6 +130,7 @@ class ToBeFileWriteTracker : WriteTracker<TypedPath, ToBeFileLazyBytes>() {
 class ToBeFileLazyBytes(val location: TypedPath, val layout: SnapshotFileLayout, data: ByteArray) {
   /** When constructed, we always have the data. */
   var data: ByteArray? = data
+
   /**
    * Shortly after being construted, this data is written to disk, and we can stop holding it in
    * memory.
@@ -136,11 +140,13 @@ class ToBeFileLazyBytes(val location: TypedPath, val layout: SnapshotFileLayout,
         ?: throw IllegalStateException("Data has already been written to disk!")
     data = null
   }
+
   /**
    * If we need to read our data, we do it from memory if it's still there, or from disk if it
    * isn't.
    */
   private fun readData(): ByteArray = data ?: layout.fs.fileReadBinary(location)
+
   /** We calculate equality based on this data. */
   override fun equals(other: Any?): Boolean =
       if (this === other) true
@@ -162,12 +168,12 @@ class InlineWriteTracker : WriteTracker<CallLocation, LiteralValue<*>>() {
             content.parseToBeLike(call.location.line).parseLiteral(literalValue.format)
           } catch (e: Exception) {
             throw AssertionError(
-                "Error while parsing the literal at ${call.location.ideLink(layout)}. Please report this error at https://github.com/diffplug/selfie",
+                "Error while parsing the literal at ${call.location.ideLink(layout)}. Please report this error at https://github.com/diffplug/selfie-lib",
                 e)
           }
       if (parsedValue != literalValue.expected) {
         throw layout.fs.assertFailed(
-            "Selfie cannot modify the literal at ${call.location.ideLink(layout)} because Selfie has a parsing bug. Please report this error at https://github.com/diffplug/selfie",
+            "Selfie cannot modify the literal at ${call.location.ideLink(layout)} because Selfie has a parsing bug. Please report this error at https://github.com/diffplug/selfie-lib",
             literalValue.expected,
             parsedValue)
       }

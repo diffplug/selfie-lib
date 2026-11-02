@@ -90,7 +90,7 @@ class SourceFile:
                         f"There is an error in {literal_value.format.__class__.__name__}, "
                         "the following value isn't round tripping.\n"
                         f"Please report this error and the data below at "
-                        "https://github.com/diffplug/selfie/issues/new\n"
+                        "https://github.com/diffplug/selfie-lib/issues/new\n"
                         f"```\n"
                         f"ORIGINAL\n{literal_value.actual}\n"
                         f"ROUNDTRIPPED\n{round_tripped}\n"

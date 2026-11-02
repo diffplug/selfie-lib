@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023-2024 DiffPlug
+ * Copyright (C) 2023-2026 DiffPlug
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,7 +60,7 @@ class SourceFile(filename: String, content: String, val language: Language) {
             "There is an error in " +
                 literalValue.format::class.simpleName +
                 ", the following value isn't round tripping.\n" +
-                "Please this error and the data below at https://github.com/diffplug/selfie/issues/new\n" +
+                "Please this error and the data below at https://github.com/diffplug/selfie-lib/issues/new\n" +
                 "```\n" +
                 "ORIGINAL\n" +
                 literalValue.actual +

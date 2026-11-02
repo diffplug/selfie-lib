@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 DiffPlug
+ * Copyright (C) 2024-2026 DiffPlug
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,7 +43,7 @@ If this is a Kotest test, make sure you added `SelfieExtension` to your `Abstrac
 If this is a JUnit test, make the following change:
   -import com.diffplug.selfie.coroutines.expectSelfie
   +import com.diffplug.selfie.Selfie.expectSelfie
-For more info https://selfie.dev/jvm/kotest#selfie-and-coroutines"""
+For more info https://lib.selfie.dev/jvm/kotest#selfie-and-coroutines"""
 
 private object DiskStorageError : DiskStorage {
   override fun readDisk(sub: String, call: CallStack) = throw IllegalStateException(WRONG_COROUTINE)

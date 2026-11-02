@@ -39,26 +39,6 @@ export function ButtonList() {
           jvm
         </Button>
       </Link>
-      <Link href="/js">
-        <Button
-          className={
-            selectedLanguage === "js" ? pressedClasses : unPressedClasses
-          }
-        >
-          js
-        </Button>
-      </Link>
-      <Link href="/js">
-        <Button
-          className={
-            selectedLanguage === "other-platforms"
-              ? pressedClasses
-              : unPressedClasses
-          }
-        >
-          ...
-        </Button>
-      </Link>
     </div>
   );
 }
