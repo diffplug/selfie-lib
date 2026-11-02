@@ -10,7 +10,7 @@ authors = [
 ]
 license = { text = "Apache-2.0" }
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = [
     "pytest>=8.0.0",
     "selfie-lib"
@@ -46,5 +46,6 @@ ignore = [ "S", "FA",  "PYI", "EM", "PLR",  "FBT", "COM", "RET", "PTH", "PLW", "
 "PLC0414", # import alias does not rename original package
 "W291", # trailing whitespace, we need it for testing snapshots
 "PGH003", # specific rule codes when ignoring type issues
-"ISC001"
+"ISC001",
+"UP007", "UP035", # TODO: modernize type hints now that 3.10 is the minimum
 ]
