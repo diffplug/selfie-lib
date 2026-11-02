@@ -9,11 +9,14 @@ spotlessChangelog {
   tagPrefix 'jvm/'
   commitMessage 'Published jvm/{{version}}'
   tagMessage "{{changes}}"
-  runAfterPush "gh release create jvm/{{version}} --title 'jvm v{{version}}' --notes-from-tag"
 }
 group = 干.proj('maven_group', 'the maven group, recommend com.diffplug')
 apply from: rootProject.file('gradle/spotless.gradle')
 apply from: 干.file('base/changelog.gradle')
+spotlessChangelog {
+  // has to come after base/changelog.gradle, which sets this for `release/` tags
+  runAfterPush "gh release create jvm/{{version}} --title 'jvm v{{version}}' --notes-from-tag"
+}
 apply from: rootProject.file('gradle/sonatype.gradle')
 
 // ./gradlew :dokkatooGeneratePublicationHtml
