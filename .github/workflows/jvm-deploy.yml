@@ -1,14 +1,14 @@
-# GH_TOKEN
+# Run this from the `release` branch. It reads these secrets from the `maven-central` environment:
 # NEXUS_USER
-# NEXUS_PASS64 (base64 NOTE: `base64` and `openssl base64` failed, had to use Java
-#   byte[] data = "{{password}}".getBytes(StandardCharsets.UTF_8);
-#   String encoded = new String(Base64.getEncoder().encode(data), StandardCharsets.UTF_8);
-#   System.out.println(encoded);
+# NEXUS_PASS
 # GPG_PASSPHRASE
-# GPG_KEY64 (base64)
-#   gpg --export-secret-keys --armor KEY_ID | openssl base64 | pbcopy
-# GRADLE_KEY
-# GRADLE_SECRET
+# GPG_KEY
+#   gpg --export-secret-subkeys --armor SUBKEY_ID! | pbcopy
+#   subkeys only, so the primary key never lands in CI
+#
+# Store each secret in the exact form the build consumes. GitHub masks the value it was given, so
+# anything a workflow step decodes or reshapes is no longer masked and lands in the log. Never use
+# base64 variants: https://github.com/diffplug/spotless/issues/3089
 
 on:
   workflow_dispatch:
@@ -27,12 +27,18 @@ jobs:
   build:
     runs-on: ubuntu-latest
     name: deploy
+    # holds the publishing secrets, restricted to `release` with a required reviewer
+    environment: maven-central
+    permissions:
+      contents: write
     env:
       GH_TOKEN: ${{ github.token }}
       ORG_GRADLE_PROJECT_nexus_user: ${{ secrets.NEXUS_USER }}
-      ORG_GRADLE_PROJECT_nexus_pass64: ${{ secrets.NEXUS_PASS64 }}
+      ORG_GRADLE_PROJECT_nexus_pass: ${{ secrets.NEXUS_PASS }}
+      ORG_GRADLE_PROJECT_gpg_key: ${{ secrets.GPG_KEY }}
+      # Gradle requires the last 8 hex digits of signing subkey FA5C18CFB74EC7C6.
+      ORG_GRADLE_PROJECT_gpg_key_id: "0xB74EC7C6"
       ORG_GRADLE_PROJECT_gpg_passphrase: ${{ secrets.GPG_PASSPHRASE }}
-      ORG_GRADLE_PROJECT_gpg_key64: ${{ secrets.GPG_KEY64 }}
     steps:
       - uses: actions/checkout@v4
       - name: jdk 17
@@ -47,4 +53,4 @@ jobs:
       - name: publish all
         if: "${{ github.event.inputs.to_publish == 'all' }}"
         run: |
-          ./gradlew :changelogPush -Prelease=true -Penable_publishing=true -Pgradle.publish.key=${{ secrets.GRADLE_KEY }} -Pgradle.publish.secret=${{ secrets.GRADLE_SECRET }} --stacktrace --warning-mode all --no-configuration-cache
+          ./gradlew :changelogPush -Prelease=true -Penable_publishing=true --stacktrace --warning-mode all --no-configuration-cache --no-scan

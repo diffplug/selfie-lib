@@ -1,0 +1,47 @@
+// Replaces blowdryer's base/sonatype.gradle, which base64-decodes its secrets and hardcodes a
+// retired signing key. Secrets must stay in the exact form GitHub was given, so that it can mask
+// them: https://github.com/diffplug/spotless/issues/3089
+// Must be applied after base/maven.gradle, except on the root project.
+
+if (project.findProperty('enable_publishing') != 'true') {
+	return
+}
+
+def requireProperty = { String name ->
+	def value = project.findProperty(name)?.toString()
+	if (value == null || value.trim().isEmpty()) {
+		throw new GradleException("Publishing requires the Gradle property '${name}'")
+	}
+	return value
+}
+
+if (plugins.hasPlugin('maven-publish')) {
+	apply plugin: 'signing'
+	signing {
+		useInMemoryPgpKeys(requireProperty('gpg_key_id'), requireProperty('gpg_key'), requireProperty('gpg_passphrase'))
+		sign(publishing.publications)
+	}
+}
+
+if (project.parent == null) {
+	if (group == null || group.trim().isEmpty()) {
+		throw new GradleException('You must set maven group in the root project')
+	}
+	apply plugin: 'io.github.gradle-nexus.publish-plugin'
+	nexusPublishing {
+		repositories {
+			sonatype {
+				nexusUrl.set(uri("https://ossrh-staging-api.central.sonatype.com/service/local/"))
+				snapshotRepositoryUrl.set(uri("https://central.sonatype.com/repository/maven-snapshots/"))
+				username = requireProperty('nexus_user')
+				password = requireProperty('nexus_pass')
+			}
+		}
+	}
+	def initTask = tasks.named('initializeSonatypeStagingRepository')
+	allprojects {
+		initTask.configure {
+			shouldRunAfter(tasks.withType(Sign))
+		}
+	}
+}
