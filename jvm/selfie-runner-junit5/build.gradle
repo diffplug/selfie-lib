@@ -34,5 +34,5 @@ test {
 }
 // it all needs to get published and formatted
 apply from: 干.file('base/maven.gradle')
-apply from: rootProject.file('gradle/sonatype.gradle')
+apply from: file('../gradle/sonatype.gradle')
 apply from: rootProject.file('gradle/jvm-target.gradle')
