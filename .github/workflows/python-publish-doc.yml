@@ -3,11 +3,13 @@ on:
     branches: [main]
     paths:
       - "python/**"
+  workflow_dispatch:
 defaults:
   run:
     working-directory: python
 jobs:
   publish:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -25,9 +27,8 @@ jobs:
       - name: Generate Documentation
         run: doxygen Doxyfile
       - name: Publish to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
+        uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: 0a95e814ccf2b6a95d2dc3bea0a4a2b4
-          projectName: selfie-pydoc
-          directory: python/html
+          command: pages deploy python/html --project-name=selfie-pydoc --branch=main
