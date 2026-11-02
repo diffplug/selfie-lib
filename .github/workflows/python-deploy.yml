@@ -1,0 +1,94 @@
+# Publishes selfie-lib and pytest-selfie to PyPI. Run this from the `release` branch, after setting
+# the version in both pyproject.toml files and adding it to python/CHANGELOG.md.
+#
+# Uses PyPI Trusted Publishing, so there is no token to store. Each project on PyPI trusts this
+# repository, this workflow's filename, and the `pypi` environment, which is restricted to
+# `release` with a required reviewer. Renaming any of those requires updating PyPI.
+
+on:
+  workflow_dispatch:
+permissions: {}
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    defaults:
+      run:
+        working-directory: python
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@v4
+        with:
+          python-version: "3.12"
+      - name: Check the version is ready to release
+        id: version
+        run: |
+          version=$(sed -n 's/^version = "\(.*\)"$/\1/p' selfie-lib/pyproject.toml)
+          other=$(sed -n 's/^version = "\(.*\)"$/\1/p' pytest-selfie/pyproject.toml)
+          [[ "$version" == "$other" ]] || { echo "Versions differ: $version and $other"; exit 1; }
+          [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "Not a release version: $version"; exit 1; }
+          grep -q "^## \[$version\]" CHANGELOG.md || { echo "$version isn't in CHANGELOG.md"; exit 1; }
+          if git ls-remote --exit-code --tags origin "python/$version" > /dev/null; then
+            echo "python/$version already exists"
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+      - name: Build selfie-lib
+        run: uv build --no-sources --out-dir dist/selfie-lib
+        working-directory: python/selfie-lib
+      - name: Build pytest-selfie
+        run: uv build --no-sources --out-dir dist/pytest-selfie
+        working-directory: python/pytest-selfie
+      - uses: actions/upload-artifact@v4
+        with:
+          name: selfie-lib
+          path: python/selfie-lib/dist/selfie-lib
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pytest-selfie
+          path: python/pytest-selfie/dist/pytest-selfie
+          if-no-files-found: error
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+      # pytest-selfie depends on selfie-lib, so selfie-lib goes first
+      - name: Publish selfie-lib
+        uses: pypa/gh-action-pypi-publish@v1.14.3
+        with:
+          packages-dir: dist/selfie-lib
+          skip-existing: true
+      - name: Publish pytest-selfie
+        uses: pypa/gh-action-pypi-publish@v1.14.3
+        with:
+          packages-dir: dist/pytest-selfie
+          skip-existing: true
+  release:
+    needs: [build, publish]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      VERSION: ${{ needs.build.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Create the tag and GitHub Release
+        run: |
+          awk -v header="## [$VERSION]" 'index($0, header) == 1 { found = 1; next } /^## \[/ { found = 0 } found' python/CHANGELOG.md > notes.md
+          # --latest=false, so that the latest JVM release stays as Latest
+          gh release create "python/$VERSION" --target "$GITHUB_SHA" --title "python v$VERSION" --notes-file notes.md --latest=false
