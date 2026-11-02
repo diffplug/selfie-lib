@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 Allowable headings are `Added`, `Fixed`, and `Changed`.
 
 ## [Unreleased]
+### Changed
+- Python 3.10 or newer is now required, since Python 3.9 reached end of life in October 2025.
 
 ## [1.0.1] - 2026-11-02
 ### Changed

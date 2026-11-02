@@ -10,6 +10,17 @@ spotlessChangelog {
   commitMessage 'Published jvm/{{version}}'
   tagMessage "{{changes}}"
 }
+// Only the tooling that runs our JS tests uses these, they never reach our users. Newer Kotlin
+// versions may bring in newer versions, at which point this can be removed.
+plugins.withType(org.jetbrains.kotlin.gradle.targets.js.yarn.YarnPlugin) {
+  def yarn = extensions.getByType(org.jetbrains.kotlin.gradle.targets.js.yarn.YarnRootExtension)
+  yarn.resolution('brace-expansion', '^5.0.12')
+  yarn.resolution('diff', '^8.0.3')
+  yarn.resolution('glob', '^14.0.2')
+  yarn.resolution('js-yaml', '^4.3.2')
+  yarn.resolution('minimatch', '^11.0.1')
+  yarn.resolution('serialize-javascript', '^7.1.3')
+}
 group = 干.proj('maven_group', 'the maven group, recommend com.diffplug')
 apply from: rootProject.file('gradle/spotless.gradle')
 apply from: 干.file('base/changelog.gradle')
