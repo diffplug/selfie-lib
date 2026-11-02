@@ -3,11 +3,13 @@ on:
     branches: [main]
     paths:
       - 'jvm/**'
+  workflow_dispatch:
 defaults:
   run:
     working-directory: jvm
 jobs:
   publish:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -26,9 +28,8 @@ jobs:
       - name: Build
         run: ./gradlew :dokkatooGeneratePublicationHtml
       - name: Publish to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
+        uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: 0a95e814ccf2b6a95d2dc3bea0a4a2b4
-          projectName: selfie-kdoc
-          directory: jvm/build/dokka/html
+          command: pages deploy jvm/build/dokka/html --project-name=selfie-kdoc --branch=main
