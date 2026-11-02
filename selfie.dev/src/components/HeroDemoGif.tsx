@@ -67,10 +67,11 @@ export function ButtonList() {
         "align-center",
         "flex",
         "flex-row",
-        "justify-between",
-        "wide-phone:w-[220px]",
-        "tablet:w-[328px]",
-        "desktop:w-[490px]"
+        "justify-end",
+        "gap-[10px]",
+        "wide-phone:gap-[15px]",
+        "tablet:gap-[12px]",
+        "desktop:gap-[17px]"
       )}
     >
       <Link href="/py">
